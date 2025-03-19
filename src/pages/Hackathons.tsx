@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
@@ -40,18 +39,16 @@ const HACKATHONS = [
 ];
 
 const Hackathons = () => {
-  const [apiKey, setApiKey] = useState('');
-  const [showApiInput, setShowApiInput] = useState(false);
   const [hackathonIdea, setHackathonIdea] = useState('');
   const [loading, setLoading] = useState(false);
+  const [theme, setTheme] = useState('');
   const { toast } = useToast();
 
-  const handleGenerateIdea = () => {
-    if (!apiKey) {
-      setShowApiInput(true);
+  const handleGenerateIdea = async () => {
+    if (!theme.trim()) {
       toast({
-        title: "API Key Required",
-        description: "Please enter your AI API key to generate hackathon ideas.",
+        title: "Theme Required",
+        description: "Please enter a theme or topic for your hackathon project.",
         variant: "destructive"
       });
       return;
@@ -59,36 +56,37 @@ const Hackathons = () => {
 
     setLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      setHackathonIdea("A sustainability-focused app that uses computer vision to identify recyclable items and provides guidance on proper disposal methods. Incorporate gamification elements to encourage sustainable practices and connect with local recycling centers.");
+    try {
+      // Replace with your actual backend endpoint
+      const response = await fetch('/api/generate-idea', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ theme })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate idea');
+      }
+
+      const data = await response.json();
+      setHackathonIdea(data.idea);
+      
       toast({
         title: "Idea Generated!",
         description: "We've created a unique hackathon project idea for you.",
       });
-    }, 2000);
-  };
-
-  const saveApiKey = () => {
-    if (!apiKey) {
+    } catch (error) {
+      console.error('Error:', error);
       toast({
-        title: "API Key Required",
-        description: "Please enter a valid API key.",
+        title: "Error",
+        description: "Failed to generate project idea. Please try again later.",
         variant: "destructive"
       });
-      return;
+    } finally {
+      setLoading(false);
     }
-
-    // Store API key in localStorage
-    localStorage.setItem('ai_api_key', apiKey);
-    
-    toast({
-      title: "API Key Saved",
-      description: "Your API key has been saved securely.",
-    });
-    
-    setShowApiInput(false);
   };
 
   return (
@@ -102,47 +100,36 @@ const Hackathons = () => {
           </p>
         </div>
 
-        {/* API Key Input Section */}
-        {showApiInput && (
-          <Card className="mb-8 border-brand-purple/30">
-            <CardHeader>
-              <CardTitle>Enter Your AI API Key</CardTitle>
-              <CardDescription>
-                We use Gemini/OpenAI API to generate hackathon ideas and provide guidance. Your key is stored locally in your browser.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex gap-2">
-                <Input 
-                  type="password" 
-                  placeholder="Enter your API key" 
-                  value={apiKey} 
-                  onChange={(e) => setApiKey(e.target.value)}
-                />
-                <Button onClick={saveApiKey}>Save Key</Button>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
         {/* Hackathon Idea Generator */}
-        <Card className="mb-10 glass-card border-none animate-fade-in">
+        <Card className="mb-12">
           <CardHeader>
             <CardTitle>Generate Hackathon Project Idea</CardTitle>
             <CardDescription>
-              Let our AI generate a unique project idea tailored for hackathons
+              Let our AI generate a unique project idea tailored for hackathons based on your interests
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            {hackathonIdea ? (
-              <div className="p-4 bg-brand-purple/10 rounded-lg border border-brand-purple/30">
-                <h3 className="font-semibold mb-2">Your Project Idea:</h3>
-                <p>{hackathonIdea}</p>
-              </div>
-            ) : (
-              <p className="text-foreground/80">
-                Click the button below to generate a unique hackathon project idea using AI.
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <label htmlFor="theme" className="text-sm font-medium">Project Theme or Topic</label>
+              <Input
+                id="theme"
+                placeholder="e.g., sustainability, healthcare, education, AI, blockchain"
+                value={theme}
+                onChange={(e) => setTheme(e.target.value)}
+                className="w-full"
+              />
+              <p className="text-sm text-muted-foreground">
+                Enter a theme or topic you're interested in exploring for your hackathon project
               </p>
+            </div>
+
+            {hackathonIdea && (
+              <div className="mt-6 space-y-4">
+                <h3 className="font-semibold">Your Generated Project Idea:</h3>
+                <div className="p-4 bg-brand-purple/10 rounded-lg border border-brand-purple/30">
+                  <p className="whitespace-pre-wrap">{hackathonIdea}</p>
+                </div>
+              </div>
             )}
           </CardContent>
           <CardFooter>

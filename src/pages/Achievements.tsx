@@ -1,16 +1,16 @@
-
 import React, { useState, useEffect } from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Slider } from '@/components/ui/slider';
-import { Trophy, Star, Target, Flag, Award, Gift, CheckCircle2, Clock, XCircle, LucideIcon } from 'lucide-react';
+import { Trophy, Star, Target, Flag, Award, Gift, CheckCircle2, Clock, XCircle, LucideIcon, BookOpen, Code, Brain, Rocket } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useNavigate } from 'react-router-dom';
 
-// Type definitions
+// Types
 type QuestStatus = 'not-started' | 'in-progress' | 'completed';
 type QuestDifficulty = 'easy' | 'medium' | 'hard';
 
@@ -27,69 +27,15 @@ interface Quest {
   completedActions: number;
 }
 
-// Game data
-const INITIAL_QUESTS: Quest[] = [
-  {
-    id: 1,
-    title: "Start Your Coding Journey",
-    description: "Complete your first roadmap milestone by finishing a beginner tutorial",
-    xpReward: 100,
-    status: 'not-started',
-    progress: 0,
-    difficulty: 'easy',
-    icon: Target,
-    requiredActions: 3,
-    completedActions: 0
-  },
-  {
-    id: 2,
-    title: "First Project Completed",
-    description: "Build and deploy your first web application following a roadmap",
-    xpReward: 250,
-    status: 'not-started',
-    progress: 0,
-    difficulty: 'medium',
-    icon: Flag,
-    requiredActions: 5,
-    completedActions: 0
-  },
-  {
-    id: 3,
-    title: "Hackathon Explorer",
-    description: "Register for your first hackathon using our platform's guidance",
-    xpReward: 150,
-    status: 'not-started',
-    progress: 0,
-    difficulty: 'easy',
-    icon: Trophy,
-    requiredActions: 2,
-    completedActions: 0
-  },
-  {
-    id: 4,
-    title: "Skill Master",
-    description: "Complete five challenges in your chosen skill path",
-    xpReward: 300,
-    status: 'not-started',
-    progress: 0,
-    difficulty: 'medium',
-    icon: Award,
-    requiredActions: 5,
-    completedActions: 0
-  },
-  {
-    id: 5,
-    title: "Portfolio Builder",
-    description: "Create a professional portfolio with three showcased projects",
-    xpReward: 400,
-    status: 'not-started',
-    progress: 0,
-    difficulty: 'hard',
-    icon: Star,
-    requiredActions: 8,
-    completedActions: 0
-  }
-];
+interface LearningProgress {
+  category: string;
+  icon: LucideIcon;
+  topics: {
+    name: string;
+    progress: number;
+    status: 'not-started' | 'in-progress' | 'completed';
+  }[];
+}
 
 // Helper functions
 const getDifficultyColor = (difficulty: QuestDifficulty) => {
@@ -126,25 +72,48 @@ const getStatusIcon = (status: QuestStatus) => {
 };
 
 const Achievements = () => {
-  // State management
-  const [quests, setQuests] = useState<Quest[]>(() => {
-    // Try to load quests from localStorage, or use initial quests if not available
-    const savedQuests = localStorage.getItem('user-quests');
-    return savedQuests ? JSON.parse(savedQuests) : INITIAL_QUESTS;
-  });
-  
+  const navigate = useNavigate();
+  const [quests, setQuests] = useState<Quest[]>([]);
+  const [learningProgress, setLearningProgress] = useState<LearningProgress[]>([]);
   const [selectedQuest, setSelectedQuest] = useState<Quest | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [userLevel, setUserLevel] = useState(1);
   const [userXp, setUserXp] = useState(0);
   const [xpToNextLevel, setXpToNextLevel] = useState(500);
-  
-  // Save quests to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem('user-quests', JSON.stringify(quests));
-  }, [quests]);
+  const [loading, setLoading] = useState(true);
 
-  // Calculate user level and XP
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    const fetchProgress = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/progress', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch progress');
+        }
+
+        const data = await response.json();
+        setQuests(data.quests);
+        setLearningProgress(data.learningProgress);
+      } catch (error) {
+        console.error('Error fetching progress:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProgress();
+  }, [navigate]);
+
   useEffect(() => {
     const totalXp = quests.reduce((total, quest) => {
       if (quest.status === 'completed') {
@@ -158,250 +127,265 @@ const Achievements = () => {
     setXpToNextLevel(500 - (totalXp % 500));
   }, [quests]);
 
-  // Handle opening quest detail dialog
   const openQuestDialog = (quest: Quest) => {
     setSelectedQuest(quest);
     setDialogOpen(true);
   };
 
-  // Update quest progress
-  const updateQuestProgress = (value: number[]) => {
+  const updateQuestProgress = async (value: number[]) => {
     if (!selectedQuest) return;
     
     const progressValue = value[0];
-    const updatedQuests = quests.map(quest => {
-      if (quest.id === selectedQuest.id) {
-        const completedActions = Math.round((progressValue / 100) * quest.requiredActions);
-        
-        // Fix: Use typed status instead of plain string
-        let status: QuestStatus = 'not-started';
-        if (progressValue >= 100) {
-          status = 'completed';
-        } else if (progressValue > 0) {
-          status = 'in-progress';
-        }
-        
-        return {
-          ...quest,
-          progress: progressValue,
-          status,
-          completedActions
-        };
-      }
-      return quest;
-    });
-    
-    setQuests(updatedQuests);
-    
-    // Fix: Use the same typed status for selectedQuest
-    let updatedStatus: QuestStatus = 'not-started';
+    const completedActions = Math.round((progressValue / 100) * selectedQuest.requiredActions);
+    let status: QuestStatus = 'not-started';
     if (progressValue >= 100) {
-      updatedStatus = 'completed';
+      status = 'completed';
     } else if (progressValue > 0) {
-      updatedStatus = 'in-progress';
+      status = 'in-progress';
     }
-    
-    setSelectedQuest({
-      ...selectedQuest,
-      progress: progressValue,
-      completedActions: Math.round((progressValue / 100) * selectedQuest.requiredActions),
-      status: updatedStatus
-    });
+
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:5000/api/progress/quest', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          questId: selectedQuest.id,
+          progress: progressValue,
+          completedActions,
+          status
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update quest progress');
+      }
+
+      const updatedQuests = quests.map(quest => {
+        if (quest.id === selectedQuest.id) {
+          return {
+            ...quest,
+            progress: progressValue,
+            status,
+            completedActions
+          };
+        }
+        return quest;
+      });
+      
+      setQuests(updatedQuests);
+      setSelectedQuest({
+        ...selectedQuest,
+        progress: progressValue,
+        completedActions,
+        status
+      });
+    } catch (error) {
+      console.error('Error updating quest progress:', error);
+    }
   };
 
-  // Complete quest action
-  const completeQuest = () => {
+  const completeQuest = async () => {
     if (!selectedQuest) return;
     
-    const updatedQuests = quests.map(quest => {
-      if (quest.id === selectedQuest.id) {
-        return {
-          ...quest,
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:5000/api/progress/quest', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          questId: selectedQuest.id,
           progress: 100,
-          status: 'completed' as QuestStatus,
-          completedActions: quest.requiredActions
-        };
+          completedActions: selectedQuest.requiredActions,
+          status: 'completed'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to complete quest');
       }
-      return quest;
-    });
-    
-    setQuests(updatedQuests);
-    setDialogOpen(false);
+
+      const updatedQuests = quests.map(quest => {
+        if (quest.id === selectedQuest.id) {
+          return {
+            ...quest,
+            progress: 100,
+            status: 'completed' as QuestStatus,
+            completedActions: quest.requiredActions
+          };
+        }
+        return quest;
+      });
+      
+      setQuests(updatedQuests);
+      setDialogOpen(false);
+    } catch (error) {
+      console.error('Error completing quest:', error);
+    }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-black">
       <NavBar />
-      
-      <main className="flex-grow container px-4 md:px-6 py-12 mt-16">
-        <div className="space-y-6">
-          {/* Hero section with player stats */}
-          <div className="glass-card p-6 rounded-xl mb-10">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-4">
-              <div>
-                <h1 className="text-3xl font-bold mb-2">Your Quest Journey</h1>
-                <p className="text-foreground/70">Complete quests to level up and unlock achievements</p>
+      <main className="container mx-auto px-4 py-8">
+        {/* Hero section */}
+        <div className="bg-[#1a1a1a] rounded-xl p-6 mb-8 border border-[#333]">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+              <h1 className="text-3xl font-bold text-white mb-2">Your Progress</h1>
+              <p className="text-[#888]">Track your learning journey and achievements</p>
+            </div>
+            
+            <div className="bg-[#222] p-4 rounded-xl border border-[#444] w-full md:w-auto">
+              <div className="flex items-center gap-3 mb-2">
+                <Trophy className="h-5 w-5 text-yellow-500" />
+                <div className="text-xl font-semibold text-white">Level {userLevel}</div>
               </div>
-              
-              <div className="glass-card p-4 rounded-xl w-full md:w-auto">
-                <div className="flex items-center gap-3 mb-1">
-                  <Trophy className="h-5 w-5 text-yellow-500" />
-                  <div className="text-xl font-semibold">Level {userLevel}</div>
+              <div className="space-y-1">
+                <div className="flex justify-between text-sm text-[#888]">
+                  <span>XP Progress</span>
+                  <span>{500 - xpToNextLevel} / 500 XP</span>
                 </div>
-                
-                <Progress 
-                  value={(500 - xpToNextLevel) / 5} 
-                  className="h-2.5 w-full md:w-64 mb-1" 
-                />
-                
-                <div className="flex justify-between text-sm text-foreground/70">
-                  <span>XP: {userXp}</span>
-                  <span>{xpToNextLevel} XP to next level</span>
-                </div>
+                <Progress value={((500 - xpToNextLevel) / 500) * 100} className="h-2" />
               </div>
             </div>
           </div>
-          
-          {/* Quest board */}
-          <h2 className="text-2xl font-bold mb-4">Available Quests</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {quests.map(quest => {
-              const StatusIcon = getStatusIcon(quest.status);
-              return (
-                <Card 
-                  key={quest.id} 
-                  className="glass-card border-none hover:shadow-lg transition-all duration-300 hover-glow relative overflow-hidden"
-                >
-                  {quest.status === 'completed' && (
-                    <div className="absolute top-0 right-0 bg-green-500 text-white px-3 py-1 rounded-bl-lg text-xs font-medium">
-                      COMPLETED
-                    </div>
-                  )}
-                  
-                  <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <div className="flex items-center gap-2">
-                        <quest.icon className="h-6 w-6 text-brand-purple" />
-                        <CardTitle className="text-xl">{quest.title}</CardTitle>
-                      </div>
-                    </div>
-                    <div className="flex gap-2 mt-2">
-                      <Badge className={`${getDifficultyColor(quest.difficulty)} border`}>
-                        {quest.difficulty.charAt(0).toUpperCase() + quest.difficulty.slice(1)}
-                      </Badge>
-                      
-                      <Badge className={`${getStatusColor(quest.status)} border`}>
-                        <StatusIcon className="h-3 w-3 mr-1" />
-                        <span>
-                          {quest.status === 'not-started' ? 'Not Started' : 
-                           quest.status === 'in-progress' ? 'In Progress' : 'Completed'}
-                        </span>
-                      </Badge>
-                    </div>
-                    <CardDescription className="mt-2">{quest.description}</CardDescription>
-                  </CardHeader>
-                  
-                  <CardContent>
-                    <div className="space-y-3">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-foreground/70">Progress</span>
-                        <span className="font-medium">{quest.progress}%</span>
-                      </div>
-                      <Progress value={quest.progress} className="h-2" />
-                      
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-1.5">
-                          <Gift className="h-4 w-4 text-yellow-500" />
-                          <span className="text-sm font-medium">{quest.xpReward} XP</span>
-                        </div>
-                        
-                        <div className="text-xs text-foreground/70">
-                          {quest.completedActions}/{quest.requiredActions} actions
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                  
-                  <CardFooter>
-                    <Button 
-                      onClick={() => openQuestDialog(quest)} 
-                      className="w-full bg-brand-purple hover:bg-brand-purple/90"
-                    >
-                      {quest.status === 'completed' ? 'View Details' : 'Update Progress'}
-                    </Button>
-                  </CardFooter>
-                </Card>
-              );
-            })}
-          </div>
         </div>
-      </main>
-      
-      {/* Quest detail dialog */}
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="glass-card border-none">
+
+        {/* Tabs */}
+        <div className="mb-8">
+          <Tabs defaultValue="learning" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-8">
+              <TabsTrigger value="learning" className="text-lg py-3">
+                <BookOpen className="w-4 h-4 mr-2" />
+                Learning Progress
+              </TabsTrigger>
+              <TabsTrigger value="quests" className="text-lg py-3">
+                <Flag className="w-4 h-4 mr-2" />
+                Quests & Achievements
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="learning" className="space-y-6">
+              {learningProgress.map((category) => (
+                <div key={category.category} className="bg-[#1a1a1a] p-6 rounded-xl border border-[#333]">
+                  <div className="flex items-center gap-3 mb-6">
+                    <category.icon className="w-6 h-6 text-brand-purple" />
+                    <h2 className="text-xl font-semibold text-white">{category.category}</h2>
+                  </div>
+                  <div className="space-y-4">
+                    {category.topics.map((topic) => (
+                      <div key={topic.name} className="space-y-2">
+                        <div className="flex justify-between items-center">
+                          <span className="font-medium text-[#ccc]">{topic.name}</span>
+                          <Badge className={getStatusColor(topic.status)}>
+                            {topic.progress}%
+                          </Badge>
+                        </div>
+                        <Progress value={topic.progress} className="h-2" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </TabsContent>
+
+            <TabsContent value="quests" className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {quests.map((quest) => (
+                  <div key={quest.id} className="bg-[#1a1a1a] rounded-xl border border-[#333] overflow-hidden">
+                    <div className="p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                          <quest.icon className="h-6 w-6 text-brand-purple" />
+                          <h3 className="text-lg font-semibold text-white">{quest.title}</h3>
+                        </div>
+                        <Badge className={getDifficultyColor(quest.difficulty)}>
+                          {quest.difficulty}
+                        </Badge>
+                      </div>
+                      <p className="text-[#888] mb-4">{quest.description}</p>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm text-[#888]">
+                          <span>Progress</span>
+                          <span>{quest.completedActions} / {quest.requiredActions} actions</span>
+                        </div>
+                        <Progress value={quest.progress} className="h-2" />
+                      </div>
+                    </div>
+                    <div className="border-t border-[#333] p-4 flex justify-between items-center">
+                      <div className="flex items-center gap-2 text-[#888]">
+                        <Trophy className="h-4 w-4 text-yellow-500" />
+                        <span>{quest.xpReward} XP</span>
+                      </div>
+                      <Button
+                        variant="outline"
+                        onClick={() => openQuestDialog(quest)}
+                        className="gap-2"
+                      >
+                        <span>Update Progress</span>
+                        {React.createElement(getStatusIcon(quest.status), { className: 'h-4 w-4' })}
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           {selectedQuest && (
-            <>
+            <DialogContent className="bg-[#1a1a1a] border border-[#333]">
               <DialogHeader>
-                <div className="flex items-center gap-2">
-                  <selectedQuest.icon className="h-5 w-5 text-brand-purple" />
-                  <DialogTitle>{selectedQuest.title}</DialogTitle>
-                </div>
-                <DialogDescription>{selectedQuest.description}</DialogDescription>
+                <DialogTitle className="text-white">{selectedQuest.title}</DialogTitle>
+                <DialogDescription className="text-[#888]">{selectedQuest.description}</DialogDescription>
               </DialogHeader>
-              
-              <div className="space-y-4 my-4">
-                <div className="flex justify-between">
-                  <span className="text-foreground/70">Quest Progress</span>
-                  <span className="font-medium">{selectedQuest.progress}%</span>
-                </div>
-                
-                <Slider
-                  defaultValue={[selectedQuest.progress]}
-                  max={100}
-                  step={1}
-                  onValueChange={updateQuestProgress}
-                  disabled={selectedQuest.status === 'completed'}
-                />
-                
-                <div className="flex justify-between">
-                  <div className="flex items-center gap-1.5">
-                    <Trophy className="h-4 w-4 text-yellow-500" />
-                    <span>{selectedQuest.xpReward} XP Reward</span>
+              <div className="py-4">
+                <div className="space-y-4">
+                  <div className="flex justify-between text-sm text-[#888]">
+                    <span>Actions Completed</span>
+                    <span>{selectedQuest.completedActions} / {selectedQuest.requiredActions}</span>
                   </div>
-                  
-                  <div className="text-sm flex items-center gap-1.5">
-                    <div className="h-2 w-2 rounded-full bg-brand-purple"></div>
-                    <span>
-                      {selectedQuest.completedActions}/{selectedQuest.requiredActions} actions completed
-                    </span>
-                  </div>
+                  <Slider
+                    value={[selectedQuest.progress]}
+                    onValueChange={updateQuestProgress}
+                    max={100}
+                    step={1}
+                    className="py-4"
+                  />
                 </div>
               </div>
-              
-              <DialogFooter className="gap-2 flex-col sm:flex-row">
-                <Button 
-                  variant="outline" 
-                  onClick={() => setDialogOpen(false)}
-                  className="w-full sm:w-auto"
-                >
-                  Close
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setDialogOpen(false)}>
+                  Cancel
                 </Button>
-                
-                {selectedQuest.status !== 'completed' && (
-                  <Button 
-                    onClick={completeQuest} 
-                    className="w-full sm:w-auto bg-brand-purple hover:bg-brand-purple/90"
-                  >
-                    Complete Quest
-                  </Button>
-                )}
+                <Button 
+                  onClick={completeQuest} 
+                  disabled={selectedQuest.progress < 100}
+                  className="bg-brand-purple hover:bg-brand-purple/90"
+                >
+                  Complete Quest
+                </Button>
               </DialogFooter>
-            </>
+            </DialogContent>
           )}
-        </DialogContent>
-      </Dialog>
-      
+        </Dialog>
+      </main>
       <Footer />
     </div>
   );

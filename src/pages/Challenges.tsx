@@ -1,5 +1,5 @@
-
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,7 @@ import { Code, Trophy, Clock, ArrowRight, TrendingUp } from 'lucide-react';
 
 const CHALLENGES = [
   {
+    id: 'javascript',
     title: "JavaScript Fundamentals",
     description: "Master JavaScript basics including variables, functions, objects, and arrays.",
     level: "Beginner",
@@ -19,6 +20,7 @@ const CHALLENGES = [
     tags: ["JavaScript", "Fundamentals", "Web Development"]
   },
   {
+    id: 'react',
     title: "React Components Challenge",
     description: "Build five common UI components in React with proper state management.",
     level: "Intermediate",
@@ -28,6 +30,7 @@ const CHALLENGES = [
     tags: ["React", "Components", "Frontend"]
   },
   {
+    id: 'api',
     title: "API Integration Marathon",
     description: "Connect your application to three different external APIs and display data.",
     level: "Intermediate",
@@ -37,6 +40,7 @@ const CHALLENGES = [
     tags: ["API", "Integration", "Backend"]
   },
   {
+    id: 'algorithms',
     title: "Algorithmic Problem Solving",
     description: "Solve a series of algorithm challenges focusing on efficiency and readability.",
     level: "Advanced",
@@ -62,9 +66,16 @@ const getLevelColor = (level: string) => {
 
 const Challenges = () => {
   const [userXp, setUserXp] = useState(0);
+  const navigate = useNavigate();
 
-  const startChallenge = (xp: number) => {
-    setUserXp(prev => prev + xp);
+  const startChallenge = (challengeId: string, xp: number) => {
+    if (challengeId === 'javascript') {
+      navigate('/challenges/javascript');
+    } else if (challengeId === 'react') {
+      navigate('/challenges/react');
+    } else {
+      setUserXp(prev => prev + xp);
+    }
   };
 
   return (
@@ -129,7 +140,7 @@ const Challenges = () => {
               </CardContent>
               <CardFooter>
                 <Button 
-                  onClick={() => startChallenge(challenge.xpReward)} 
+                  onClick={() => startChallenge(challenge.id, challenge.xpReward)} 
                   className="w-full bg-brand-purple hover:bg-brand-purple/90 group"
                 >
                   <Code className="mr-2 h-4 w-4" />
