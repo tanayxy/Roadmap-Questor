@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { BookOpen, Cpu, Award, User } from 'lucide-react';
+import { BookOpen, Cpu, Award, Code } from 'lucide-react';
 
 const NavBar = () => {
   return (
@@ -16,21 +16,21 @@ const NavBar = () => {
         </Link>
         
         <div className="hidden md:flex items-center gap-6">
-          <Link to="/roadmap" className="text-foreground/80 hover:text-foreground transition">
+          <Link to="/roadmaps" className="text-foreground/80 hover:text-foreground transition">
             <div className="flex items-center gap-1.5">
               <BookOpen className="h-4 w-4" />
-              <span>Career Roadmap</span>
+              <span>Career Roadmaps</span>
             </div>
           </Link>
           <Link to="/hackathons" className="text-foreground/80 hover:text-foreground transition">
             <div className="flex items-center gap-1.5">
               <Award className="h-4 w-4" />
-              <span>Hackathons</span>
+              <span>Hackathon Guide</span>
             </div>
           </Link>
           <Link to="/challenges" className="text-foreground/80 hover:text-foreground transition">
             <div className="flex items-center gap-1.5">
-              <Award className="h-4 w-4" />
+              <Code className="h-4 w-4" />
               <span>Challenges</span>
             </div>
           </Link>

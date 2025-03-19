@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import RoadmapCard from './RoadmapCard';
+import { Link } from 'react-router-dom';
 
 const ROADMAPS = [
   {
@@ -25,7 +26,7 @@ const ROADMAPS = [
     timeframe: "12-18 months",
     skills: ["Frontend", "Backend", "DevOps", "Architecture"]
   }
-] as const;
+]; // Removed 'as const' to fix the type error
 
 const RoadmapsSection = () => {
   return (
@@ -38,9 +39,11 @@ const RoadmapsSection = () => {
               Explore curated learning paths designed to take you from beginner to professional.
             </p>
           </div>
-          <Button variant="outline" className="mt-4 md:mt-0 border-brand-purple/50 hover:bg-brand-purple/10">
-            View All Roadmaps
-          </Button>
+          <Link to="/roadmaps">
+            <Button variant="outline" className="mt-4 md:mt-0 border-brand-purple/50 hover:bg-brand-purple/10">
+              View All Roadmaps
+            </Button>
+          </Link>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

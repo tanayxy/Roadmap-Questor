@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 interface RoadmapCardProps {
   title: string;
@@ -28,6 +30,18 @@ const getLevelColor = (level: string) => {
 };
 
 const RoadmapCard = ({ title, description, level, timeframe, skills, className }: RoadmapCardProps) => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleViewRoadmap = () => {
+    // In a real application, we would navigate to a specific roadmap page
+    // For now, we'll just show a toast notification
+    toast({
+      title: `${title} Roadmap`,
+      description: "This roadmap will be available in the full version of the app.",
+    });
+  };
+
   return (
     <div className={cn(
       "glass-card p-6 rounded-xl transition-all duration-300 hover-glow flex flex-col h-full",
@@ -55,7 +69,10 @@ const RoadmapCard = ({ title, description, level, timeframe, skills, className }
         </div>
       </div>
       
-      <Button className="w-full bg-brand-purple hover:bg-brand-purple/90 group">
+      <Button 
+        className="w-full bg-brand-purple hover:bg-brand-purple/90 group"
+        onClick={handleViewRoadmap}
+      >
         <span>View Roadmap</span>
         <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
       </Button>

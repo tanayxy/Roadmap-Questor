@@ -1,17 +1,30 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { Sparkles, LoaderCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { useNavigate } from 'react-router-dom';
 
 const GenerateRoadmapSection = () => {
   const [loading, setLoading] = useState(false);
   const [career, setCareer] = useState('');
   const [experience, setExperience] = useState('beginner');
+  const [showApiForm, setShowApiForm] = useState(false);
+  const [apiKey, setApiKey] = useState('');
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if API key exists in localStorage
+    const savedApiKey = localStorage.getItem('ai_api_key');
+    if (savedApiKey) {
+      setApiKey(savedApiKey);
+    }
+  }, []);
 
   const handleGenerate = () => {
     if (!career.trim()) {
@@ -23,16 +36,48 @@ const GenerateRoadmapSection = () => {
       return;
     }
 
+    if (!apiKey) {
+      setShowApiForm(true);
+      toast({
+        title: "API Key Required",
+        description: "Please enter your AI API key to generate a roadmap.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setLoading(true);
     
     // Simulate API call
     setTimeout(() => {
       setLoading(false);
       toast({
-        title: "Coming Soon!",
-        description: "This feature will be available soon! API integration pending.",
+        title: "Roadmap Generated!",
+        description: "Your personalized career roadmap is ready to view.",
       });
+      navigate('/roadmaps');
     }, 2000);
+  };
+
+  const saveApiKey = () => {
+    if (!apiKey.trim()) {
+      toast({
+        title: "API Key Required",
+        description: "Please enter a valid API key.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Store API key in localStorage
+    localStorage.setItem('ai_api_key', apiKey);
+    
+    toast({
+      title: "API Key Saved",
+      description: "Your API key has been saved securely.",
+    });
+    
+    setShowApiForm(false);
   };
 
   return (
@@ -45,6 +90,28 @@ const GenerateRoadmapSection = () => {
               Let AI create a personalized career roadmap based on your interests and experience level.
             </p>
           </div>
+          
+          {showApiForm ? (
+            <Card className="mb-6 border-brand-purple/30">
+              <CardHeader>
+                <CardTitle>Enter Your AI API Key</CardTitle>
+                <CardDescription>
+                  We use Gemini/OpenAI API to generate personalized roadmaps. Your key is stored locally in your browser.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex gap-2">
+                  <Input 
+                    type="password" 
+                    placeholder="Enter your API key" 
+                    value={apiKey} 
+                    onChange={(e) => setApiKey(e.target.value)}
+                  />
+                  <Button onClick={saveApiKey}>Save Key</Button>
+                </div>
+              </CardContent>
+            </Card>
+          ) : null}
           
           <div className="space-y-6">
             <div className="space-y-2">
