@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import Roadmaps from "./pages/Roadmaps";
 import Hackathons from "./pages/Hackathons";
 import Challenges from "./pages/Challenges";
+import Achievements from "./pages/Achievements";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/roadmaps" element={<Roadmaps />} />
           <Route path="/hackathons" element={<Hackathons />} />
           <Route path="/challenges" element={<Challenges />} />
+          <Route path="/achievements" element={<Achievements />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
