@@ -1,0 +1,101 @@
+Tech_Stack,Project_Theme,Project_Idea,Project_Difficulty
+"React, Flask, TensorFlow",AI & ML,"AI-powered chatbot - Features: NLP-based conversation, sentiment analysis, multi-language support.",Medium
+"React, Flask, TensorFlow",AI & ML,"Automated resume screening - Features: Resume parsing, job matching, AI-based ranking.",Easy
+"React, Flask, TensorFlow",AI & ML,"Predictive healthcare analytics - Features: Disease prediction, anomaly detection, health trend analysis.",Easy
+"React, Flask, TensorFlow",AI & ML,"Autonomous driving AI - Features: Object detection, path planning, sensor fusion.",Medium
+"React, Flask, TensorFlow",AI & ML,"AI-based financial fraud detection - Features: Transaction monitoring, anomaly detection, real-time alerts.",Hard
+"HTML, CSS, Flask, TensorFlow",AI & ML,"AI-powered chatbot - Features: NLP-based conversation, sentiment analysis, multi-language support.",Medium
+"HTML, CSS, Flask, TensorFlow",AI & ML,"Automated resume screening - Features: Resume parsing, job matching, AI-based ranking.",Easy
+"HTML, CSS, Flask, TensorFlow",AI & ML,"Predictive healthcare analytics - Features: Disease prediction, anomaly detection, health trend analysis.",Medium
+"HTML, CSS, Flask, TensorFlow",AI & ML,"Autonomous driving AI - Features: Object detection, path planning, sensor fusion.",Hard
+"HTML, CSS, Flask, TensorFlow",AI & ML,"AI-based financial fraud detection - Features: Transaction monitoring, anomaly detection, real-time alerts.",Medium
+"Vue.js, FastAPI, PyTorch",AI & ML,"AI-powered chatbot - Features: NLP-based conversation, sentiment analysis, multi-language support.",Hard
+"Vue.js, FastAPI, PyTorch",AI & ML,"Automated resume screening - Features: Resume parsing, job matching, AI-based ranking.",Easy
+"Vue.js, FastAPI, PyTorch",AI & ML,"Predictive healthcare analytics - Features: Disease prediction, anomaly detection, health trend analysis.",Hard
+"Vue.js, FastAPI, PyTorch",AI & ML,"Autonomous driving AI - Features: Object detection, path planning, sensor fusion.",Easy
+"Vue.js, FastAPI, PyTorch",AI & ML,"AI-based financial fraud detection - Features: Transaction monitoring, anomaly detection, real-time alerts.",Easy
+"React, Node.js",EdTech,"AI-powered tutor - Features: Personalized learning, real-time feedback, adaptive quizzes.",Hard
+"React, Node.js",EdTech,"LMS with gamification - Features: Leaderboards, achievement badges, progress tracking.",Easy
+"React, Node.js",EdTech,"Collaborative coding platform - Features: Live coding, AI-assisted debugging, peer review system.",Easy
+"React, Node.js",EdTech,"Handwriting recognition for education - Features: OCR for handwritten text, real-time feedback, mistake suggestions.",Medium
+"React, Node.js",EdTech,"Language learning AI - Features: Speech recognition, grammar correction, AI-driven pronunciation feedback.",Easy
+"HTML, CSS, Django, PostgreSQL",EdTech,"AI-powered tutor - Features: Personalized learning, real-time feedback, adaptive quizzes.",Easy
+"HTML, CSS, Django, PostgreSQL",EdTech,"LMS with gamification - Features: Leaderboards, achievement badges, progress tracking.",Medium
+"HTML, CSS, Django, PostgreSQL",EdTech,"Collaborative coding platform - Features: Live coding, AI-assisted debugging, peer review system.",Hard
+"HTML, CSS, Django, PostgreSQL",EdTech,"Handwriting recognition for education - Features: OCR for handwritten text, real-time feedback, mistake suggestions.",Hard
+"HTML, CSS, Django, PostgreSQL",EdTech,"Language learning AI - Features: Speech recognition, grammar correction, AI-driven pronunciation feedback.",Medium
+"Flutter, Firebase",EdTech,"AI-powered tutor - Features: Personalized learning, real-time feedback, adaptive quizzes.",Medium
+"Flutter, Firebase",EdTech,"LMS with gamification - Features: Leaderboards, achievement badges, progress tracking.",Medium
+"Flutter, Firebase",EdTech,"Collaborative coding platform - Features: Live coding, AI-assisted debugging, peer review system.",Hard
+"Flutter, Firebase",EdTech,"Handwriting recognition for education - Features: OCR for handwritten text, real-time feedback, mistake suggestions.",Medium
+"Flutter, Firebase",EdTech,"Language learning AI - Features: Speech recognition, grammar correction, AI-driven pronunciation feedback.",Hard
+"IoT, OpenCV",Smart Systems,"Smart home automation - Features: IoT-controlled lights, voice assistant integration, security monitoring.",Hard
+"IoT, OpenCV",Smart Systems,"AI-powered surveillance - Features: Face recognition, anomaly detection, automated alerts.",Hard
+"IoT, OpenCV",Smart Systems,"IoT-enabled agriculture monitoring - Features: Soil moisture detection, automated irrigation, remote monitoring.",Medium
+"IoT, OpenCV",Smart Systems,"Smart traffic management - Features: AI-based congestion detection, real-time routing, predictive analytics.",Easy
+"IoT, OpenCV",Smart Systems,"AI-powered waste management - Features: Garbage classification, route optimization, waste tracking.",Hard
+"HTML, CSS, Raspberry Pi, Python",Smart Systems,"Smart home automation - Features: IoT-controlled lights, voice assistant integration, security monitoring.",Medium
+"HTML, CSS, Raspberry Pi, Python",Smart Systems,"AI-powered surveillance - Features: Face recognition, anomaly detection, automated alerts.",Easy
+"HTML, CSS, Raspberry Pi, Python",Smart Systems,"IoT-enabled agriculture monitoring - Features: Soil moisture detection, automated irrigation, remote monitoring.",Medium
+"HTML, CSS, Raspberry Pi, Python",Smart Systems,"Smart traffic management - Features: AI-based congestion detection, real-time routing, predictive analytics.",Medium
+"HTML, CSS, Raspberry Pi, Python",Smart Systems,"AI-powered waste management - Features: Garbage classification, route optimization, waste tracking.",Hard
+"Arduino, C++",Smart Systems,"Smart home automation - Features: IoT-controlled lights, voice assistant integration, security monitoring.",Easy
+"Arduino, C++",Smart Systems,"AI-powered surveillance - Features: Face recognition, anomaly detection, automated alerts.",Hard
+"Arduino, C++",Smart Systems,"IoT-enabled agriculture monitoring - Features: Soil moisture detection, automated irrigation, remote monitoring.",Hard
+"Arduino, C++",Smart Systems,"Smart traffic management - Features: AI-based congestion detection, real-time routing, predictive analytics.",Medium
+"Arduino, C++",Smart Systems,"AI-powered waste management - Features: Garbage classification, route optimization, waste tracking.",Hard
+"Java, Spring Boot",Enterprise Solutions,"CRM for small businesses - Features: Contact management, sales automation, customer analytics.",Easy
+"Java, Spring Boot",Enterprise Solutions,"HR analytics dashboard - Features: Employee performance tracking, predictive attrition analysis, recruitment insights.",Medium
+"Java, Spring Boot",Enterprise Solutions,"Automated invoice processing - Features: OCR-based data extraction, fraud detection, auto-payment scheduling.",Hard
+"Java, Spring Boot",Enterprise Solutions,"Business workflow automation - Features: Process mapping, task automation, AI-based optimization.",Easy
+"Java, Spring Boot",Enterprise Solutions,"AI-driven customer support - Features: Chatbot integration, sentiment analysis, ticket auto-resolution.",Medium
+"HTML, CSS, C#, .NET",Enterprise Solutions,"CRM for small businesses - Features: Contact management, sales automation, customer analytics.",Medium
+"HTML, CSS, C#, .NET",Enterprise Solutions,"HR analytics dashboard - Features: Employee performance tracking, predictive attrition analysis, recruitment insights.",Easy
+"HTML, CSS, C#, .NET",Enterprise Solutions,"Automated invoice processing - Features: OCR-based data extraction, fraud detection, auto-payment scheduling.",Hard
+"HTML, CSS, C#, .NET",Enterprise Solutions,"Business workflow automation - Features: Process mapping, task automation, AI-based optimization.",Easy
+"HTML, CSS, C#, .NET",Enterprise Solutions,"AI-driven customer support - Features: Chatbot integration, sentiment analysis, ticket auto-resolution.",Medium
+"React, Ruby on Rails",Enterprise Solutions,"CRM for small businesses - Features: Contact management, sales automation, customer analytics.",Medium
+"React, Ruby on Rails",Enterprise Solutions,"HR analytics dashboard - Features: Employee performance tracking, predictive attrition analysis, recruitment insights.",Easy
+"React, Ruby on Rails",Enterprise Solutions,"Automated invoice processing - Features: OCR-based data extraction, fraud detection, auto-payment scheduling.",Medium
+"React, Ruby on Rails",Enterprise Solutions,"Business workflow automation - Features: Process mapping, task automation, AI-based optimization.",Medium
+"React, Ruby on Rails",Enterprise Solutions,"AI-driven customer support - Features: Chatbot integration, sentiment analysis, ticket auto-resolution.",Hard
+"Rust, Blockchain",Blockchain & Finance,"Crypto portfolio manager - Features: Real-time tracking, performance analytics, risk assessment.",Medium
+"Rust, Blockchain",Blockchain & Finance,"Smart contract-based crowdfunding - Features: Secure fundraising, automated payouts, transparency tracking.",Easy
+"Rust, Blockchain",Blockchain & Finance,"Decentralized voting system - Features: Blockchain-powered authentication, fraud prevention, instant results.",Medium
+"Rust, Blockchain",Blockchain & Finance,"Blockchain-based land registry - Features: Tamper-proof records, smart contract ownership transfers, secure document storage.",Hard
+"Rust, Blockchain",Blockchain & Finance,"Secure document notarization - Features: Blockchain-based document verification, digital signatures, tamper detection.",Hard
+"HTML, CSS, Solidity, Ethereum",Blockchain & Finance,"Crypto portfolio manager - Features: Real-time tracking, performance analytics, risk assessment.",Hard
+"HTML, CSS, Solidity, Ethereum",Blockchain & Finance,"Smart contract-based crowdfunding - Features: Secure fundraising, automated payouts, transparency tracking.",Medium
+"HTML, CSS, Solidity, Ethereum",Blockchain & Finance,"Decentralized voting system - Features: Blockchain-powered authentication, fraud prevention, instant results.",Hard
+"HTML, CSS, Solidity, Ethereum",Blockchain & Finance,"Blockchain-based land registry - Features: Tamper-proof records, smart contract ownership transfers, secure document storage.",Hard
+"HTML, CSS, Solidity, Ethereum",Blockchain & Finance,"Secure document notarization - Features: Blockchain-based document verification, digital signatures, tamper detection.",Medium
+"Python, Hyperledger",Blockchain & Finance,"Crypto portfolio manager - Features: Real-time tracking, performance analytics, risk assessment.",Medium
+"Python, Hyperledger",Blockchain & Finance,"Smart contract-based crowdfunding - Features: Secure fundraising, automated payouts, transparency tracking.",Easy
+"Python, Hyperledger",Blockchain & Finance,"Decentralized voting system - Features: Blockchain-powered authentication, fraud prevention, instant results.",Medium
+"Python, Hyperledger",Blockchain & Finance,"Blockchain-based land registry - Features: Tamper-proof records, smart contract ownership transfers, secure document storage.",Easy
+"Python, Hyperledger",Blockchain & Finance,"Secure document notarization - Features: Blockchain-based document verification, digital signatures, tamper detection.",Hard
+"React, Node.js",Full Stack Development,"E-commerce website with AI-driven recommendations - Features: Personalized recommendations, secure payment gateway, order tracking.",Medium
+"React, Node.js",Full Stack Development,"Job portal with resume parsing - Features: AI-powered resume matching, job notifications, interview scheduling.",Medium
+"React, Node.js",Full Stack Development,"Online learning platform with interactive coding exercises - Features: Live coding IDE, automated code assessment, peer collaboration.",Medium
+"React, Node.js",Full Stack Development,"Project management tool with real-time collaboration - Features: Task tracking, Gantt charts, team chat integration.",Easy
+"React, Node.js",Full Stack Development,"Healthcare appointment booking system with AI diagnostics - Features: Doctor scheduling, AI-based symptom analysis, patient history tracking.",Medium
+"HTML, CSS, Vue.js, Express.js",Full Stack Development,"E-commerce website with AI-driven recommendations - Features: Personalized recommendations, secure payment gateway, order tracking.",Easy
+"HTML, CSS, Vue.js, Express.js",Full Stack Development,"Job portal with resume parsing - Features: AI-powered resume matching, job notifications, interview scheduling.",Medium
+"HTML, CSS, Vue.js, Express.js",Full Stack Development,"Online learning platform with interactive coding exercises - Features: Live coding IDE, automated code assessment, peer collaboration.",Medium
+"HTML, CSS, Vue.js, Express.js",Full Stack Development,"Project management tool with real-time collaboration - Features: Task tracking, Gantt charts, team chat integration.",Easy
+"HTML, CSS, Vue.js, Express.js",Full Stack Development,"Healthcare appointment booking system with AI diagnostics - Features: Doctor scheduling, AI-based symptom analysis, patient history tracking.",Medium
+"Angular, Django",Full Stack Development,"E-commerce website with AI-driven recommendations - Features: Personalized recommendations, secure payment gateway, order tracking.",Easy
+"Angular, Django",Full Stack Development,"Job portal with resume parsing - Features: AI-powered resume matching, job notifications, interview scheduling.",Hard
+"Angular, Django",Full Stack Development,"Online learning platform with interactive coding exercises - Features: Live coding IDE, automated code assessment, peer collaboration.",Hard
+"Angular, Django",Full Stack Development,"Project management tool with real-time collaboration - Features: Task tracking, Gantt charts, team chat integration.",Medium
+"Angular, Django",Full Stack Development,"Healthcare appointment booking system with AI diagnostics - Features: Doctor scheduling, AI-based symptom analysis, patient history tracking.",Hard
+"Svelte, Flask",Full Stack Development,"E-commerce website with AI-driven recommendations - Features: Personalized recommendations, secure payment gateway, order tracking.",Hard
+"Svelte, Flask",Full Stack Development,"Job portal with resume parsing - Features: AI-powered resume matching, job notifications, interview scheduling.",Easy
+"Svelte, Flask",Full Stack Development,"Online learning platform with interactive coding exercises - Features: Live coding IDE, automated code assessment, peer collaboration.",Easy
+"Svelte, Flask",Full Stack Development,"Project management tool with real-time collaboration - Features: Task tracking, Gantt charts, team chat integration.",Hard
+"Svelte, Flask",Full Stack Development,"Healthcare appointment booking system with AI diagnostics - Features: Doctor scheduling, AI-based symptom analysis, patient history tracking.",Hard
+"Next.js, FastAPI",Full Stack Development,"E-commerce website with AI-driven recommendations - Features: Personalized recommendations, secure payment gateway, order tracking.",Medium
+"Next.js, FastAPI",Full Stack Development,"Job portal with resume parsing - Features: AI-powered resume matching, job notifications, interview scheduling.",Medium
+"Next.js, FastAPI",Full Stack Development,"Online learning platform with interactive coding exercises - Features: Live coding IDE, automated code assessment, peer collaboration.",Hard
+"Next.js, FastAPI",Full Stack Development,"Project management tool with real-time collaboration - Features: Task tracking, Gantt charts, team chat integration.",Medium
+"Next.js, FastAPI",Full Stack Development,"Healthcare appointment booking system with AI diagnostics - Features: Doctor scheduling, AI-based symptom analysis, patient history tracking.",Medium
