@@ -173,6 +173,7 @@ const Achievements = () => {
       if (quest.id === selectedQuest.id) {
         const completedActions = Math.round((progressValue / 100) * quest.requiredActions);
         
+        // Fix: Use typed status instead of plain string
         let status: QuestStatus = 'not-started';
         if (progressValue >= 100) {
           status = 'completed';
@@ -191,11 +192,20 @@ const Achievements = () => {
     });
     
     setQuests(updatedQuests);
+    
+    // Fix: Use the same typed status for selectedQuest
+    let updatedStatus: QuestStatus = 'not-started';
+    if (progressValue >= 100) {
+      updatedStatus = 'completed';
+    } else if (progressValue > 0) {
+      updatedStatus = 'in-progress';
+    }
+    
     setSelectedQuest({
       ...selectedQuest,
       progress: progressValue,
       completedActions: Math.round((progressValue / 100) * selectedQuest.requiredActions),
-      status: progressValue >= 100 ? 'completed' : progressValue > 0 ? 'in-progress' : 'not-started'
+      status: updatedStatus
     });
   };
 
@@ -208,7 +218,7 @@ const Achievements = () => {
         return {
           ...quest,
           progress: 100,
-          status: 'completed',
+          status: 'completed' as QuestStatus,
           completedActions: quest.requiredActions
         };
       }
