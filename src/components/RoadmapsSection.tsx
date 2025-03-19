@@ -8,25 +8,25 @@ const ROADMAPS = [
   {
     title: "Frontend Web Developer",
     description: "Master HTML, CSS, JavaScript and modern frameworks like React to build exceptional user interfaces.",
-    level: "Beginner",
+    level: "Beginner" as const,
     timeframe: "6-9 months",
     skills: ["HTML", "CSS", "JavaScript", "React"]
   },
   {
     title: "Backend Developer",
     description: "Learn server-side programming, databases, and API development to power web applications.",
-    level: "Intermediate",
+    level: "Intermediate" as const,
     timeframe: "6-12 months",
     skills: ["Node.js", "Python", "Databases", "APIs"]
   },
   {
     title: "Full Stack Engineer",
     description: "Combine frontend and backend expertise to build complete web applications from scratch.",
-    level: "Advanced",
+    level: "Advanced" as const,
     timeframe: "12-18 months",
     skills: ["Frontend", "Backend", "DevOps", "Architecture"]
   }
-]; // Removed 'as const' to fix the type error
+];
 
 const RoadmapsSection = () => {
   return (
