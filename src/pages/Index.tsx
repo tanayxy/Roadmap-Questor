@@ -1,4 +1,3 @@
-
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import HeroSection from '@/components/HeroSection';
@@ -7,6 +6,8 @@ import RoadmapsSection from '@/components/RoadmapsSection';
 import GenerateRoadmapSection from '@/components/GenerateRoadmapSection';
 import TestimonialSection from '@/components/TestimonialSection';
 import Footer from '@/components/Footer';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const Index = () => {
   return (

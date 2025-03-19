@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { BookOpen, Cpu, Award, Code } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 const NavBar = () => {
   return (
@@ -47,6 +47,9 @@ const NavBar = () => {
               Sign Up
             </Button>
           </Link>
+        </div>
+        <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <ThemeToggle />
         </div>
       </div>
     </nav>

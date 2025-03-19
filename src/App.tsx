@@ -16,34 +16,46 @@ import ReactChallenge from "./pages/ReactChallenge";
 import FrontendRoadmap from "./pages/FrontendRoadmap";
 import BackendRoadmap from "./pages/BackendRoadmap";
 import CustomRoadmap from "./pages/CustomRoadmap";
+import Journey from "./pages/Journey";
+import Coach from "./pages/Coach";
+import { ThemeProvider } from './context/ThemeContext';
+import ThemeToggle from './components/ThemeToggle';
+import NavBar from './components/NavBar';
 
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <Router>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/roadmaps" element={<Roadmaps />} />
-          <Route path="/roadmaps/frontend" element={<FrontendRoadmap />} />
-          <Route path="/roadmaps/backend" element={<BackendRoadmap />} />
-          <Route path="/roadmaps/custom" element={<CustomRoadmap />} />
-          <Route path="/hackathons" element={<Hackathons />} />
-          <Route path="/challenges" element={<Challenges />} />
-          <Route path="/achievements" element={<Achievements />} />
-          <Route path="/challenges/javascript" element={<JavaScriptChallenge />} />
-          <Route path="/challenges/react" element={<ReactChallenge />} />
-          <Route path="/progress" element={<Navigate to="/achievements" replace />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <Router>
+          <NavBar>
+            <ThemeToggle />
+          </NavBar>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/roadmaps" element={<Roadmaps />} />
+            <Route path="/roadmaps/frontend" element={<FrontendRoadmap />} />
+            <Route path="/roadmaps/backend" element={<BackendRoadmap />} />
+            <Route path="/roadmaps/custom" element={<CustomRoadmap />} />
+            <Route path="/hackathons" element={<Hackathons />} />
+            <Route path="/challenges" element={<Challenges />} />
+            <Route path="/achievements" element={<Achievements />} />
+            <Route path="/challenges/javascript" element={<JavaScriptChallenge />} />
+            <Route path="/challenges/react" element={<ReactChallenge />} />
+            <Route path="/progress" element={<Navigate to="/achievements" replace />} />
+            <Route path="/journey" element={<Journey />} />
+            <Route path="/coach" element={<Coach />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </ThemeProvider>
 );
 
 export default App;
