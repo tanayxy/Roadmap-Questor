@@ -1,0 +1,12 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Pretending to build the project...'
+                // If you want to "build" the README, uncomment the next line:
+                // sh 'cat README.md'
+            }
+        }
+    }
+}
