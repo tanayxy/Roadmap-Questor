@@ -1,12 +1,43 @@
 pipeline {
     agent any
+    
     stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out code...'
+                checkout scm
+            }
+        }
+        
         stage('Build') {
             steps {
                 echo 'Starting the build process...'
                 sh 'echo "Build completed successfully." > build.log'
                 sh 'ls -l'
             }
+        }
+        
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                sh 'echo "All tests passed" > test-results.log'
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                echo 'Deployment stage...'
+                sh 'echo "Deployment completed" > deploy.log'
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
