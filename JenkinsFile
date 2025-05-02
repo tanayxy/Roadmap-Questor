@@ -1,12 +1,12 @@
 pipeline {
     agent any
     stages {
-        stage('Build README') {
+        stage('Build') {
             steps {
-                echo 'Building the README...'
-                sh 'cat README.md'
+                echo 'Starting the build process...'
+                sh 'echo "Build completed successfully." > build.log'
+                sh 'ls -l'
             }
         }
     }
 }
-
