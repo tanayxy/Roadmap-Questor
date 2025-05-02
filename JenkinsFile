@@ -12,22 +12,22 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Starting the build process...'
-                sh 'echo "Build completed successfully." > build.log'
-                sh 'ls -l'
+                bat 'echo Build completed successfully. > build.log'
+                bat 'dir'
             }
         }
         
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'echo "All tests passed" > test-results.log'
+                bat 'echo All tests passed > test-results.log'
             }
         }
         
         stage('Deploy') {
             steps {
                 echo 'Deployment stage...'
-                sh 'echo "Deployment completed" > deploy.log'
+                bat 'echo Deployment completed > deploy.log'
             }
         }
     }
