@@ -1,11 +1,10 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Build README') {
             steps {
-                echo 'Pretending to build the project...'
-                // If you want to "build" the README, uncomment the next line:
-                // sh 'cat README.md'
+                echo 'Building the README...'
+                sh 'cat README.md'
             }
         }
     }
